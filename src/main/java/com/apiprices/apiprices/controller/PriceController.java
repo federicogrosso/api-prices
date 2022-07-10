@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
+
 /**
  * Controller in charge of requests where is involve the {@link com.apiprices.apiprices.model.Price} entity.
  */
@@ -30,7 +33,12 @@ public class PriceController {
      * @throws ApiException Wrong params o internal error
      */
     @GetMapping("/apply")
-    public PricesAppliedResponse getPriceToApply(@Validated PriceRequestParams priceRequestParams) throws ApiException {
-        return service.getPriceToApply(priceRequestParams);
+    public PricesAppliedResponse getPriceToApply(@Validated PriceRequestParams priceRequestParams, HttpServletResponse res) throws ApiException {
+        PricesAppliedResponse response = service.getPriceToApply(priceRequestParams);
+        if (Objects.isNull(response.getPrice())) {
+            res.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+        }
+        return response;
     }
 }

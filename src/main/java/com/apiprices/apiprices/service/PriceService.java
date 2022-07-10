@@ -23,27 +23,20 @@ public class PriceService {
        Objects.requireNonNull(priceRequestParams.getProductId(), "productId is required");
 
        try {
-           List<Price> pricesToApply = repository.getPriceToApply(priceRequestParams.getAppliedDate(),
+           List<Price> pricesList = repository.getPriceToApply(priceRequestParams.getAppliedDate(),
                    priceRequestParams.getBrandId(), priceRequestParams.getProductId());
-           return setPriceResponse(pricesToApply);
+           if (pricesList.isEmpty()) {
+               return PricesAppliedResponse.build(new Price());
+           }
+           return setPriceResponse(pricesList);
        } catch (Exception e) {
            String error = String.format("[action:getPriceToApply][error_message:%s]", e.getMessage());
            throw new ApiException("500", error);
        }
    }
 
-    private PricesAppliedResponse setPriceResponse(List<Price> price) {
-        PricesAppliedResponse pricesAppliedResponse = new PricesAppliedResponse();
-        if (price.isEmpty()) {
-            return pricesAppliedResponse;
-        }
-
-        pricesAppliedResponse.setPrice(price.get(0).getPrice());
-        pricesAppliedResponse.setBrandId(price.get(0).getBrandId());
-        pricesAppliedResponse.setProductId(price.get(0).getProductId());
-        pricesAppliedResponse.setStartDate(price.get(0).getStartDate());
-        pricesAppliedResponse.setEndDate(price.get(0).getEndDate());
-        return pricesAppliedResponse;
+    private PricesAppliedResponse setPriceResponse(List<Price> priceList) {
+        return PricesAppliedResponse.build(priceList.get(0));
     }
 }
 
