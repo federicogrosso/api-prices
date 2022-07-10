@@ -18,10 +18,6 @@ public class PriceService {
     private PriceRepository repository;
 
    public PricesAppliedResponse getPriceToApply(PriceRequestParams priceRequestParams) throws ApiException {
-       Objects.requireNonNull(priceRequestParams.getAppliedDate(), "appliedDate is required");
-       Objects.requireNonNull(priceRequestParams.getBrandId(), "brandId is required");
-       Objects.requireNonNull(priceRequestParams.getProductId(), "productId is required");
-
        try {
            List<Price> pricesList = repository.getPriceToApply(priceRequestParams.getAppliedDate(),
                    priceRequestParams.getBrandId(), priceRequestParams.getProductId());
