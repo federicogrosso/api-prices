@@ -6,7 +6,6 @@ import com.apiprices.apiprices.exception.ApiException;
 import com.apiprices.apiprices.exception.PriceNotFoundException;
 import com.apiprices.apiprices.model.Price;
 import com.apiprices.apiprices.repository.PriceRepository;
-import junitparams.Parameters;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
