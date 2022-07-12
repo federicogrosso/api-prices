@@ -1,9 +1,6 @@
 package com.apiprices.apiprices.controller;
 
 import com.apiprices.apiprices.model.Price;
-import junitparams.JUnitParamsRunner;
-import junitparams.Parameters;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +19,14 @@ public class PriceControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    // Integration test with data in memory (H2)
     @ParameterizedTest
     @MethodSource("getPricesParams")
     public void testGetAppliedPrice(String params, Float priceExpected)
     {
-        Float price =  this.restTemplate
-                        .getForObject("http://localhost:" + port + "/prices/apply?" + params, Price.class).getPrice();
-        assertEquals(priceExpected, price);
+        assertEquals(priceExpected, this.restTemplate
+                .getForObject("http://localhost:" + port + "/prices?" + params, Price.class)
+                .getPrice());
     }
 
     private static Object[] getPricesParams() {

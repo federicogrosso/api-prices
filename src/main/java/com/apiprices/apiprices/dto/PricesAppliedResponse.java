@@ -1,4 +1,4 @@
-package com.apiprices.apiprices.response;
+package com.apiprices.apiprices.dto;
 
 import com.apiprices.apiprices.model.Price;
 import com.fasterxml.jackson.annotation.JsonProperty;

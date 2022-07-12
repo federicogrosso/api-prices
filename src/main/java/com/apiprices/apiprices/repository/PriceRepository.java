@@ -12,10 +12,21 @@ import java.util.List;
 @Repository
 public interface PriceRepository extends JpaRepository<Price, Long> {
 
-    @Query("select new com.apiprices.apiprices.model.Price(p.priceId, p.brandId, p.startDate, p.endDate, p.priceList, p.productId, p.priority, p.price, p.curr) "
-            + "from Price p "
-            + "where (p.startDate<=:appliedDate and p.endDate>=:appliedDate) and p.brandId=:brandId and p.productId=:productId "
-            + "order by p.priority desc")
+    @Query("select new com.apiprices.apiprices.model.Price("
+            + " p.priceId,"
+            + " p.brandId,"
+            + " p.startDate,"
+            + " p.endDate,"
+            + " p.priceList,"
+            + " p.productId,"
+            + " p.priority,"
+            + " p.price,"
+            + " p.curr)"
+            + " from Price p"
+            + " where (p.startDate<=:appliedDate and p.endDate>=:appliedDate)"
+            + " and p.brandId=:brandId"
+            + " and p.productId=:productId"
+            + " order by p.priority desc")
     List<Price> getPriceToApply(@Param("appliedDate") LocalDateTime appliedDate,
                                 @Param("brandId") Long brandId,
                                 @Param("productId") Long productId);

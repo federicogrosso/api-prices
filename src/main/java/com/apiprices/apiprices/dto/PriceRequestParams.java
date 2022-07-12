@@ -1,11 +1,13 @@
-package com.apiprices.apiprices.request;
+package com.apiprices.apiprices.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 @Data
+@AllArgsConstructor
 public class PriceRequestParams {
 
     @NotNull(message = "required")
